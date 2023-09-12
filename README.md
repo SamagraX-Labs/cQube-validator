@@ -58,16 +58,37 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Docs
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Single Upload
 
-## Stay in touch
+```bash
+curl --request POST \
+  --url https://cqube-admin.onrender.com/admin/validate \
+  --header 'Content-Type: multipart/form-data' \
+  --form grammar=@/path/to/cQube-POCs/impl/c-qube/ingest/programs/diksha/avgplaytime-event.grammar.csv \
+  --form data=@/path/to/cQube-POCs/impl/c-qube/ingest/programs/diksha/avgplaytime-event.data.csv \
+  --form type=event-data
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Following event types are supported
 
-## License
+```js
+export enum FileType {
+  DimensionGrammar = 'dimension-grammar',
+  DimensionData = 'dimension-data',
+  EventGrammar = 'event-grammar',
+  EventData = 'event-data',
+}
+```
 
-Nest is [MIT licensed](LICENSE).
+- Bulk Upload: Used to validate ingest folder at once
+
+```js
+export enum FileType {
+  DimensionGrammar = 'dimension-grammar',
+  DimensionData = 'dimension-data',
+  EventGrammar = 'event-grammar',
+  EventData = 'event-data',
+}
+```
