@@ -84,11 +84,9 @@ export enum FileType {
 
 - Bulk Upload: Used to validate ingest folder at once
 
-```js
-export enum FileType {
-  DimensionGrammar = 'dimension-grammar',
-  DimensionData = 'dimension-data',
-  EventGrammar = 'event-grammar',
-  EventData = 'event-data',
-}
+```sh
+curl --request POST \
+  --url http://localhost:3000/admin/bulk \
+  --header 'Content-Type: multipart/form-data' \
+  --form folder=@/path/to/update.zip
 ```
