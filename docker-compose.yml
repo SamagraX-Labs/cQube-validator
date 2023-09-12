@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  cqube-validator:
+    image: cqube-validator
+    build: .
+    ports:
+      - ${EXTERNAL_PORT-3000}:${INTERNAL_PORT-3000}
+    env_file:
+      - .env
