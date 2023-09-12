@@ -64,7 +64,7 @@ $ npm run test:cov
 
 ```bash
 curl --request POST \
-  --url https://cqube-admin.onrender.com/admin/validate \
+  --url http://143.198.187.236:3000/admin/validate \
   --header 'Content-Type: multipart/form-data' \
   --form grammar=@/path/to/cQube-POCs/impl/c-qube/ingest/programs/diksha/avgplaytime-event.grammar.csv \
   --form data=@/path/to/cQube-POCs/impl/c-qube/ingest/programs/diksha/avgplaytime-event.data.csv \
@@ -86,7 +86,7 @@ export enum FileType {
 
 ```sh
 curl --request POST \
-  --url http://localhost:3000/admin/bulk \
+  --url http://143.198.187.236:3000/admin/bulk \
   --header 'Content-Type: multipart/form-data' \
   --form folder=@/path/to/update.zip
 ```
