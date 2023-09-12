@@ -13,7 +13,7 @@ on:
   push:
     tags: ['v*.*.*', 'v*.*.*-*']
     branches:
-      - master
+      - main
 
 env:
   REGISTRY: ghcr.io
