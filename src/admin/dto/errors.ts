@@ -1,6 +1,7 @@
 export type ValidationErrors = {
-  row: string;
-  col: string;
+  row: string | number;
+  col: string | number;
   errorCode: number;
   error: string;
+  data?: any;
 };

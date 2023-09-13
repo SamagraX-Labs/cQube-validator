@@ -39,14 +39,16 @@ export class EventDataValidator {
     grammarHeaders: string[],
   ): ValidationErrors[] {
     const errors: ValidationErrors[] = [];
+
     if (contentHeaders.length !== grammarHeaders.length) {
       return [
         {
-          row: 1 + '',
-          col: 1 + '',
+          row: 0,
+          col: 0,
           errorCode: 2003,
           error:
-            'Mismatch number of columns: Content and Grammar file headers are not matching',
+            'Mismatch number of columns: Data file header length does not match the one specified in the grammar',
+          data: contentHeaders,
         },
       ];
     }
@@ -54,10 +56,11 @@ export class EventDataValidator {
     for (let i = 0; i < contentHeaders.length; i++) {
       if (contentHeaders[i] !== grammarHeaders[i]) {
         errors.push({
-          row: 1 + '',
-          col: i + '',
+          row: 0,
+          col: i,
           errorCode: 1005,
           error: `Mismatched header: Expected ${grammarHeaders[i]} but found ${contentHeaders[i]}`,
+          data: contentHeaders,
         });
       }
     }
@@ -75,10 +78,11 @@ export class EventDataValidator {
       const len = currentRow.length;
       if (currentRow.length !== dataTypes.length) {
         errors.push({
-          row: i + 1 + '',
-          col: '0',
+          row: i,
+          col: 0,
           errorCode: 2003,
           error: `Expected ${numCols} columns at row ${i + 1} got ${len}`,
+          data: currentRow,
         });
 
         continue;
@@ -90,12 +94,13 @@ export class EventDataValidator {
           case 'string':
             if (typeof currentRow[idx] !== 'string') {
               errors.push({
-                row: i + 1 + '',
-                col: idx + '',
+                row: i,
+                col: idx,
                 errorCode: 1002,
                 error: `Mismatched data type: Expected ${dataType} but found ${typeof currentRow[
                   idx
                 ]}`,
+                data: currentRow[idx],
               });
             }
             break;
@@ -108,6 +113,7 @@ export class EventDataValidator {
                 error: `Mismatched data type: Expected ${dataType} but found ${typeof currentRow[
                   idx
                 ]}`,
+                data: currentRow[idx],
               });
             }
             break;
@@ -123,6 +129,7 @@ export class EventDataValidator {
                 error: `Mismatched data type: Expected ${dataType} but found ${typeof currentRow[
                   idx
                 ]}`,
+                data: currentRow[idx],
               });
             }
             break;

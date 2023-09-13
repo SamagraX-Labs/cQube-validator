@@ -31,22 +31,23 @@ export class DimensionDataValidator {
     this.headerLine.forEach((header, index) => {
       this.dataContentLines.indexOf(header) === -1
         ? this.errors.push({
-            row: 1,
-            col: index,
-            errorCode: 1001,
-            error: `Missing header from grammar file: ${header}`,
-          })
+          row: 0,
+          col: index,
+          errorCode: 1001,
+          error: `Missing header from grammar file: ${header}`,
+        })
         : null;
     });
 
     this.dataContentLines.forEach((header, index) => {
       this.headerLine.indexOf(header) === -1
         ? this.errors.push({
-            row: 1,
-            col: index,
-            errorCode: 1001,
-            error: `Extra header not in grammar file: ${header}`,
-          })
+          row: 0,
+          col: index,
+          errorCode: 1001,
+          error: `Extra header not in grammar file: ${header}`,
+          data: header,
+        })
         : null;
     });
   }
