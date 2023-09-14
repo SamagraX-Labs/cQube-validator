@@ -105,7 +105,7 @@ export class EventDataValidator {
             }
             break;
           case 'integer':
-            if (typeof currentRow[idx] !== 'number') {
+            if (isNaN(parseFloat(currentRow[idx]))) {
               errors.push({
                 row: i + 1 + '',
                 col: idx + '',
