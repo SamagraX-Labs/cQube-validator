@@ -29,14 +29,14 @@ export class DimensionValidator {
         const lineColumns = line.split(',').length;
         if (lineColumns !== columnCount) {
           errors.push({
-            row: lineNumber + 1,
+            row: lineNumber,
             col: 0,
             errorCode: 2003,
-            error: `Line ${
-              lineNumber + 1
-            }: Invalid number of columns ${lineColumns} (expected ${columnCount}), ${line.split(
-              ',',
-            )}`,
+            error: `Line ${lineNumber + 1
+              }: Invalid number of columns ${lineColumns} (expected ${columnCount}), ${line.split(
+                ',',
+              )}`,
+            data: line,
           });
         }
       }
@@ -51,10 +51,11 @@ export class DimensionValidator {
       this.pkIndexLine.indexOf('Index') === -1
     ) {
       errors.push({
-        row: 1,
+        row: 0,
         col: 0,
         errorCode: 1003,
         error: `Invalid PK/Index: First row must include 'PK' and 'Index' but found "${this.pkIndexLine}"`,
+        data: this.pkIndexLine,
       });
     }
     return errors;
@@ -65,12 +66,12 @@ export class DimensionValidator {
     this.dataTypesLine.forEach((dataType, columnIndex) => {
       if (dataType !== 'string' && dataType !== 'integer') {
         errors.push({
-          row: 2,
+          row: 1,
           col: columnIndex,
           errorCode: 1002,
-          error: `Invalid data type at column ${
-            columnIndex + 1
-          }: Only 'string' and 'integer' are allowed but found '${dataType}'`,
+          error: `Invalid data type at column ${columnIndex + 1
+            }: Only 'string' and 'integer' are allowed but found '${dataType}'`,
+          data: this.dataTypesLine,
         });
       }
     });

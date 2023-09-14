@@ -17,7 +17,7 @@ export class EventGrammarValidator {
         row: 0,
         col: 0,
         errorCode: 2005,
-        error: `Structural Error: Event Grammar file should exactly 5 rows but found ${len}`,
+        error: `Structural Error: Event Grammar file should contain exactly 5 rows but found ${len} rows`,
       });
     }
 
@@ -46,10 +46,11 @@ export class EventGrammarValidator {
     dataTypeRow.split(',').forEach((dataType: string, index: number) => {
       if (!['string', 'integer', 'date'].includes(dataType.trim())) {
         errors.push({
-          row: 3,
+          row: 1,
           col: index,
           errorCode: 1002,
-          error: `Invalid data type: ${dataType}`,
+          error: `Invalid data type: ${dataType}. Supported data types are: string, integer, date`,
+          data: dataType,
         });
       }
     });
@@ -68,10 +69,11 @@ export class EventGrammarValidator {
     lastRow.split(',').forEach((item: string, idx: number) => {
       if (!['timeDimension', 'dimension', 'metric'].includes(item.trim())) {
         errors.push({
-          row: 5,
+          row: 4,
           col: idx,
           errorCode: 1004,
           error: `Dimension Grammar Specification Error: Wrong values in fieldType row, allowed values are 1. dimension 2.timeDimension 3. metric, but received ${item}`,
+          data: lastRow,
         });
       } else if (item.trim() === 'dimension') {
         dimensionIdxs.push(idx);
@@ -88,13 +90,22 @@ export class EventGrammarValidator {
 
     dimensionIdxs.forEach((idx: number) => {
       if (fkKeysRow[idx] !== headerRow[idx]) {
-        errors.push({
-          row: '2, 4',
-          col: idx,
-          errorCode: 1005,
-          error:
-            'Event Grammar Specification Error: Mismatch header and dimension fk field names',
-        });
+        errors.push(
+          {
+            row: 1,
+            col: idx,
+            errorCode: 1005,
+            error: `Event Grammar Specification Error: Mismatch header and dimension fk field names. Given header field name is: ${headerRow[idx]} and expected fk field name is: ${fkKeysRow[idx]}`,
+            data: headerRow,
+          },
+          {
+            row: 3,
+            col: idx,
+            errorCode: 1005,
+            error: `Event Grammar Specification Error: Mismatch header and dimension fk field names. Given header field name is: ${headerRow[idx]} and expected fk field name is: ${fkKeysRow[idx]}`,
+            data: headerRow,
+          },
+        );
       }
     });
 
